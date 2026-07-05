@@ -96,6 +96,17 @@ function buildHtml(body: Record<string, string>): string {
     </div>`;
 }
 
+function getSmtpCredentials() {
+  const gmailUser = process.env["GMAIL_USER"];
+  const gmailPass = process.env["GMAIL_APP_PASSWORD"];
+
+  if (!gmailUser || !gmailPass) {
+    return null;
+  }
+
+  return { gmailUser, gmailPass };
+}
+
 router.post("/enquiry", enquiryLimiter, async (req, res) => {
   const body = req.body as Record<string, unknown>;
 
@@ -117,10 +128,8 @@ router.post("/enquiry", enquiryLimiter, async (req, res) => {
     specialReq: typeof body.specialReq === "string" ? body.specialReq.trim() : "",
   };
 
-  const gmailUser = process.env["GMAIL_USER"];
-  const gmailPass = process.env["GMAIL_APP_PASSWORD"];
-
-  if (!gmailUser || !gmailPass) {
+  const smtpCredentials = getSmtpCredentials();
+  if (!smtpCredentials) {
     res.status(503).json({ error: "Email service is not configured." });
     return;
   }
@@ -128,11 +137,11 @@ router.post("/enquiry", enquiryLimiter, async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: { user: gmailUser, pass: gmailPass },
+      auth: { user: smtpCredentials.gmailUser, pass: smtpCredentials.gmailPass },
     });
 
     await transporter.sendMail({
-      from: `"StarCraft Foods Website" <${gmailUser}>`,
+      from: `"StarCraft Foods Website" <${smtpCredentials.gmailUser}>`,
       to: TO_EMAIL,
       replyTo: fields.email,
       subject: `New Enquiry from ${fields.companyName} (${fields.industry})`,
