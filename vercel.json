@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pnpm --filter @workspace/starcraft-foods run build",
-  "outputDirectory": "artifacts/starcraft-foods/dist/public"
+  "buildCommand": "pnpm --filter @workspace/starcraft-foods run build && rm -rf public && cp -R artifacts/starcraft-foods/dist/public public",
+  "outputDirectory": "public"
 }
