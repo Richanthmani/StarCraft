@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, MessageCircle, ChevronDown, Facebook, Twitter, Instagram, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
+import { Star, MessageCircle, ChevronDown, Facebook, Twitter, Instagram, Linkedin, MapPin, Phone, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import * as Accordion from '@radix-ui/react-accordion';
 
 export function Testimonials() {
@@ -137,11 +137,46 @@ export function CTA() {
   );
 }
 
+const inputCls = "w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50";
+
 export function Contact() {
+  const [form, setForm] = useState({
+    companyName: '', industry: '', location: '', employees: '',
+    startDate: '', phone: '', email: '', mealReq: '', specialReq: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setForm(f => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const ct = res.headers.get('content-type') ?? '';
+      const data = ct.includes('application/json') ? await res.json() : {};
+      if (!res.ok) throw new Error(data.error || `Server error (${res.status}). Please try again.`);
+      setStatus('success');
+      setForm({ companyName: '', industry: '', location: '', employees: '', startDate: '', phone: '', email: '', mealReq: '', specialReq: '' });
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
+
+  const busy = status === 'loading';
+
   return (
     <section id="contact" className="py-24 bg-muted">
       <div className="container mx-auto px-6">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -154,68 +189,83 @@ export function Contact() {
 
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:w-3/5 bg-white p-8 rounded-2xl shadow-sm border border-border/50"
           >
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={e => e.preventDefault()}>
-              <div className="col-span-1 md:col-span-2">
-                <label htmlFor="company-name" className="block text-sm font-semibold mb-2 text-foreground">Company Name *</label>
-                <input id="company-name" type="text" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Acme Corp" required />
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
+                <CheckCircle className="w-16 h-16 text-primary" />
+                <h3 className="text-2xl font-serif font-bold text-foreground">Enquiry Sent!</h3>
+                <p className="text-muted-foreground max-w-sm">Thank you! We've received your enquiry and will get back to you within one business day.</p>
+                <button onClick={() => setStatus('idle')} className="mt-4 text-sm text-primary underline underline-offset-2">Submit another enquiry</button>
               </div>
-              <div>
-                <label htmlFor="industry" className="block text-sm font-semibold mb-2 text-foreground">Industry *</label>
-                <select id="industry" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                  <option value="">Select Industry</option>
-                  <option>Manufacturing</option>
-                  <option>Logistics &amp; Warehousing</option>
-                  <option>Pharmaceutical</option>
-                  <option>Corporate</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="location" className="block text-sm font-semibold mb-2 text-foreground">Location *</label>
-                <input id="location" type="text" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="City, State" required />
-              </div>
-              <div>
-                <label htmlFor="employees" className="block text-sm font-semibold mb-2 text-foreground">Number of Employees *</label>
-                <select id="employees" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                  <option value="">Select Range</option>
-                  <option>200 - 500</option>
-                  <option>500 - 1000</option>
-                  <option>1000 - 2000</option>
-                  <option>2000+</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="start-date" className="block text-sm font-semibold mb-2 text-foreground">Preferred Start Date</label>
-                <input id="start-date" type="date" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-semibold mb-2 text-foreground">Phone *</label>
-                <input id="phone" type="tel" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="+91 XXXXX XXXXX" required />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold mb-2 text-foreground">Work Email *</label>
-                <input id="email" type="email" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="name@company.com" required />
-              </div>
-              <div className="col-span-1 md:col-span-2">
-                <label htmlFor="meal-req" className="block text-sm font-semibold mb-2 text-foreground">Meal Requirements *</label>
-                <textarea id="meal-req" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 h-24" placeholder="E.g. Breakfast and Lunch for 500 employees, general shift." required></textarea>
-              </div>
-              <div className="col-span-1 md:col-span-2">
-                <label htmlFor="special-req" className="block text-sm font-semibold mb-2 text-foreground">Special Requirements</label>
-                <textarea id="special-req" className="w-full p-3 bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 h-24" placeholder="Any dietary restrictions, night shift needs, etc."></textarea>
-              </div>
-              <div className="col-span-1 md:col-span-2 mt-4">
-                <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-md transition-colors flex justify-center items-center gap-2">
-                  Send Enquiry
-                </button>
-              </div>
-            </form>
+            ) : (
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+                <div className="col-span-1 md:col-span-2">
+                  <label htmlFor="company-name" className="block text-sm font-semibold mb-2 text-foreground">Company Name *</label>
+                  <input id="company-name" type="text" className={inputCls} placeholder="Acme Corp" required disabled={busy} value={form.companyName} onChange={set('companyName')} />
+                </div>
+                <div>
+                  <label htmlFor="industry" className="block text-sm font-semibold mb-2 text-foreground">Industry *</label>
+                  <select id="industry" className={inputCls} required disabled={busy} value={form.industry} onChange={set('industry')}>
+                    <option value="">Select Industry</option>
+                    <option>Manufacturing</option>
+                    <option>Logistics &amp; Warehousing</option>
+                    <option>Pharmaceutical</option>
+                    <option>Corporate</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="location" className="block text-sm font-semibold mb-2 text-foreground">Location *</label>
+                  <input id="location" type="text" className={inputCls} placeholder="City, State" required disabled={busy} value={form.location} onChange={set('location')} />
+                </div>
+                <div>
+                  <label htmlFor="employees" className="block text-sm font-semibold mb-2 text-foreground">Number of Employees *</label>
+                  <select id="employees" className={inputCls} required disabled={busy} value={form.employees} onChange={set('employees')}>
+                    <option value="">Select Range</option>
+                    <option>200 - 500</option>
+                    <option>500 - 1000</option>
+                    <option>1000 - 2000</option>
+                    <option>2000+</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="start-date" className="block text-sm font-semibold mb-2 text-foreground">Preferred Start Date</label>
+                  <input id="start-date" type="date" className={inputCls} disabled={busy} value={form.startDate} onChange={set('startDate')} />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-semibold mb-2 text-foreground">Phone *</label>
+                  <input id="phone" type="tel" className={inputCls} placeholder="+91 XXXXX XXXXX" required disabled={busy} value={form.phone} onChange={set('phone')} />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold mb-2 text-foreground">Work Email *</label>
+                  <input id="email" type="email" className={inputCls} placeholder="name@company.com" required disabled={busy} value={form.email} onChange={set('email')} />
+                </div>
+                <div className="col-span-1 md:col-span-2">
+                  <label htmlFor="meal-req" className="block text-sm font-semibold mb-2 text-foreground">Meal Requirements *</label>
+                  <textarea id="meal-req" className={`${inputCls} h-24`} placeholder="E.g. Breakfast and Lunch for 500 employees, general shift." required disabled={busy} value={form.mealReq} onChange={set('mealReq')}></textarea>
+                </div>
+                <div className="col-span-1 md:col-span-2">
+                  <label htmlFor="special-req" className="block text-sm font-semibold mb-2 text-foreground">Special Requirements</label>
+                  <textarea id="special-req" className={`${inputCls} h-24`} placeholder="Any dietary restrictions, night shift needs, etc." disabled={busy} value={form.specialReq} onChange={set('specialReq')}></textarea>
+                </div>
+                {status === 'error' && (
+                  <div className="col-span-1 md:col-span-2 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-md px-4 py-3 text-sm">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    {errorMsg}
+                  </div>
+                )}
+                <div className="col-span-1 md:col-span-2 mt-2">
+                  <button type="submit" disabled={busy} className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-md transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                    {busy ? <><Loader2 className="w-5 h-5 animate-spin" /> Sending…</> : 'Send Enquiry'}
+                  </button>
+                </div>
+              </form>
+            )}
           </motion.div>
 
           {/* Contact Info */}
