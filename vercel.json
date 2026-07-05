@@ -1,5 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter @workspace/starcraft-foods run build",
-  "outputDirectory": "artifacts/starcraft-foods/public"
-}
