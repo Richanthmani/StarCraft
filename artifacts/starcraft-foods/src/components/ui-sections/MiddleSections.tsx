@@ -11,13 +11,13 @@ export function Services() {
     { Icon: Coffee, title: "Breakfast Services", desc: "Early-morning South Indian, North Indian, and continental breakfast at scale." },
     { Icon: Utensils, title: "Lunch Services", desc: "Nutritionist-designed lunch thalis with regional rotation and portion control." },
     { Icon: Flame, title: "Dinner Services", desc: "Warm, wholesome dinners for late-shift and residential workforce." },
-    { Icon: Moon, title: "Night Shift Meals", desc: "Round-the-clock kitchens ready for 11pm, 2am, and 5am shift changeovers." },
+    // { Icon: Moon, title: "Night Shift Meals", desc: "Round-the-clock kitchens ready for 11pm, 2am, and 5am shift changeovers." },
     { Icon: Package, title: "Packed Meals", desc: "Hygienic tamper-proof packed meals for on-site and off-site deployment." },
     { Icon: Star, title: "Executive Dining", desc: "Elevated menus for leadership floors, board meetings, and client visits." },
-    { Icon: Coffee, title: "Tea & Snacks", desc: "Two-time tea service with rotating healthy snack pairings." },
-    { Icon: Heart, title: "Special Dietary Meals", desc: "Diabetic, low-sodium, high-protein, Jain, and allergen-safe options." },
-    { Icon: Flame, title: "Festival Menus", desc: "Curated menus for Diwali, Eid, Onam, Pongal, Christmas, and more." },
-    { Icon: Truck, title: "Emergency Catering", desc: "24-hour rapid deployment for shutdowns, audits, and surge demand." }
+    // { Icon: Coffee, title: "Tea & Snacks", desc: "Two-time tea service with rotating healthy snack pairings." },
+    // { Icon: Heart, title: "Special Dietary Meals", desc: "Diabetic, low-sodium, high-protein, Jain, and allergen-safe options." },
+    { Icon: Flame, title: "Festival Menus", desc: "Curated menus for Pongal, Eid, Ugadi, Onam, Dussehra, Diwali, Christmas, New year Eve and more." },
+    // { Icon: Truck, title: "Emergency Catering", desc: "24-hour rapid deployment for shutdowns, audits, and surge demand." }
   ];
 
   return (
@@ -67,10 +67,10 @@ export function Industries() {
     { Icon: Package, name: "Warehouses" },
     { Icon: Building2, name: "Construction Sites" },
     { Icon: Briefcase, name: "Corporate Offices" },
-    { Icon: Stethoscope, name: "Hospitals" },
-    { Icon: GraduationCap, name: "Educational Institutions" },
-    { Icon: Building2, name: "Government Facilities" },
-    { Icon: Truck, name: "Logistics Hubs" }
+    // { Icon: Stethoscope, name: "Hospitals" },
+    // { Icon: GraduationCap, name: "Educational Institutions" },
+    // { Icon: Building2, name: "Government Facilities" },
+    // { Icon: Truck, name: "Logistics Hubs" }
   ];
 
   return (
@@ -84,10 +84,10 @@ export function Industries() {
         >
           <p className="text-accent font-semibold tracking-wider text-sm mb-3">INDUSTRIES WE SERVE</p>
           <h2 className="text-4xl font-serif font-bold mb-4">Built for scale, tuned for every sector.</h2>
-          <p className="text-primary-foreground/80 text-lg">From auto plants to logistics parks, our operations flex to your shifts, footprint, and workforce.</p>
+          <p className="text-primary-foreground/80 text-lg">Built for industrial workplaces, our catering services scale effortlessly with your shifts, site footprint, and workforce.</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {industries.map((ind, i) => (
             <motion.div 
               key={i}
@@ -111,16 +111,16 @@ export function Industries() {
 
 export function Features() {
   const features = [
-    { title: "Dedicated Industrial Kitchen", desc: "Purpose-built 20,000 sq ft central kitchen with steam and bulk capacity." },
+    { title: "End-to-End Industrial Kitchen Setup", desc: "Complete kitchen setup from planning to operational readiness." },
     { title: "Strict Hygiene Protocols", desc: "SOP-driven cleaning, sanitization and hand-wash discipline every hour." },
     { title: "Fresh Ingredients Daily", desc: "Zero cold-chain from farm to floor — vegetables procured every morning." },
     { title: "Customized Weekly Menus", desc: "Rotating menus co-designed with your HR and welfare committee." },
-    { title: "Nutrition-Focused Planning", desc: "In-house dietitians balance carbs, protein, fats, and micronutrients." },
-    { title: "Bulk Meal Capacity", desc: "Comfortable scale from 200 to 20,000 meals per service." },
+    // { title: "Nutrition-Focused Planning", desc: "In-house dietitians balance carbs, protein, fats, and micronutrients." },
+    { title: "Bulk Meal Capacity", desc: "Comfortable scale from 200 to 5,000 meals per service." },
     { title: "Experienced Culinary Team", desc: "Chefs with 10+ years of industrial and hotel-grade kitchen exposure." },
-    { title: "Temperature-Controlled Transport", desc: "Insulated hot boxes and refrigerated vans preserve safety and taste." },
-    { title: "On-Time Delivery Guarantee", desc: "99.8% on-time performance backed by dual-route contingency." },
-    { title: "Digital Quality Monitoring", desc: "Live dashboards for temperature, feedback, wastage, and consumption." },
+    // { title: "Temperature-Controlled Transport", desc: "Insulated hot boxes and refrigerated vans preserve safety and taste." },
+    // { title: "On-Time Delivery Guarantee", desc: "99.8% on-time performance backed by dual-route contingency." },
+    // { title: "Digital Quality Monitoring", desc: "Live dashboards for temperature, feedback, wastage, and consumption." },
     { title: "Food Safety Compliance", desc: "FSSAI, HACCP, and ISO 22000 aligned processes, audited quarterly." },
     { title: "Dedicated Account Manager", desc: "One point of contact for menu, ops, escalations, and reporting." },
   ];
@@ -136,7 +136,7 @@ export function Features() {
         >
           <p className="text-primary font-semibold tracking-wider text-sm mb-3">WHY COMPANIES CHOOSE US</p>
           <h2 className="text-4xl font-serif font-bold text-foreground mb-4">A partnership built on operational rigor.</h2>
-          <p className="text-lg text-muted-foreground">Twelve reasons India's leading factories, warehouses, and corporate campuses trust StarCraft.</p>
+          <p className="text-lg text-muted-foreground">The reasons India's most trusted industrial workplaces partner with StarCraft.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
@@ -164,7 +164,7 @@ export function Process() {
   const steps = [
     { num: "01", title: "Requirement Discussion", desc: "We understand your workforce, shifts, cuisine preferences, and budget." },
     { num: "02", title: "Site Assessment", desc: "Our operations team visits to evaluate kitchen, storage, and dining setup." },
-    { num: "03", title: "Customized Menu Planning", desc: "Nutritionists and chefs draft a rotating 28-day menu tailored to your team." },
+    { num: "03", title: "Customized Menu Planning", desc: "Expert chefs craft rotating menus tailored to your workforce." },
     { num: "04", title: "Food Tasting Session", desc: "Live tasting with your HR, welfare committee, and leadership for sign-off." },
     { num: "05", title: "Contract Finalization", desc: "Transparent SLAs on quantity, hygiene, timelines, and pricing." },
     { num: "06", title: "Daily Meal Operations", desc: "Cook, transport, serve — every day, every shift, without a miss." },

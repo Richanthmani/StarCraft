@@ -9,7 +9,8 @@ const NAV_LINKS = [
   { label: "Process", href: "#process" },
   { label: "Menu", href: "#menu" },
   { label: "Hygiene", href: "#hygiene" },
-  { label: "Case Studies", href: "#case-studies" },
+  // { label: "Case Studies", href: "#case-studies" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -118,11 +119,11 @@ export function Hero() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide mb-6">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            Nourishing India's Workforce · Since 2010
+            We Nourish India's Workforce
           </div>
           
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-[1.1] mb-6">
-            Industrial Catering Solutions That Keep Your Workforce <span className="text-accent italic">Productive.</span>
+            Catering Solutions That Keep Your Workforce <span className="text-accent italic">Productive.</span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed">
@@ -139,11 +140,11 @@ export function Hero() {
           </div>
 
           <div className="flex flex-wrap gap-4 text-sm font-medium text-white/90">
+            {/*<div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded">*/}
+            {/*  <CheckCircle className="w-4 h-4 text-accent" /> 10,000+ Meals / day*/}
+            {/*</div>*/}
             <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded">
-              <CheckCircle className="w-4 h-4 text-accent" /> 10,000+ Meals / day
-            </div>
-            <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded">
-              <ShieldCheck className="w-4 h-4 text-accent" /> FSSAI Certified kitchens
+              <ShieldCheck className="w-4 h-4 text-accent" /> FSSAI Certified kitchen
             </div>
             <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded">
               <Clock className="w-4 h-4 text-accent" /> 24×7 Shift catering
@@ -152,23 +153,23 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.div 
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        className="hidden lg:flex absolute bottom-12 right-12 bg-white p-6 rounded-xl shadow-2xl max-w-sm border border-gray-100 flex-col gap-4 z-20"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-bold text-red-600 tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" /> LIVE · TODAY
-          </div>
-          <Award className="text-accent w-6 h-6" />
-        </div>
-        <div>
-          <div className="text-4xl font-serif font-bold text-foreground">99.8%</div>
-          <div className="text-sm text-muted-foreground font-medium mt-1">On-time delivery across 50+ industrial sites</div>
-        </div>
-      </motion.div>
+      {/*<motion.div */}
+      {/*  initial={{ opacity: 0, x: 50 }}*/}
+      {/*  animate={{ opacity: 1, x: 0 }}*/}
+      {/*  transition={{ duration: 0.8, delay: 0.4 }}*/}
+      {/*  className="hidden lg:flex absolute bottom-12 right-12 bg-white p-6 rounded-xl shadow-2xl max-w-sm border border-gray-100 flex-col gap-4 z-20"*/}
+      {/*>*/}
+      {/*  <div className="flex items-center justify-between">*/}
+      {/*    <div className="flex items-center gap-2 text-xs font-bold text-red-600 tracking-wider">*/}
+      {/*      <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" /> LIVE · TODAY*/}
+      {/*    </div>*/}
+      {/*    <Award className="text-accent w-6 h-6" />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <div className="text-4xl font-serif font-bold text-foreground">99.8%</div>*/}
+      {/*    <div className="text-sm text-muted-foreground font-medium mt-1">On-time delivery across 50+ industrial sites</div>*/}
+      {/*  </div>*/}
+      {/*</motion.div>*/}
       
       <div className="absolute top-24 right-6 md:top-32 md:right-12 z-20">
         <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded text-xs font-semibold flex items-center gap-3">
@@ -223,12 +224,12 @@ function Counter({ from = 0, to, duration = 2, suffix = "" }: { from?: number, t
 
 export function Stats() {
   const stats = [
-    { value: 10000, suffix: "+", label: "Meals Served Daily" },
-    { value: 50, suffix: "+", label: "Industrial Clients" },
-    { value: 99.8, suffix: "%", label: "On-Time Delivery", isFloat: true },
-    { value: 24, suffix: "×7", label: "Shift Catering Support" },
-    { value: 15, suffix: "+", label: "Years of Experience" },
-    { value: 100, suffix: "%", label: "FSSAI Compliant" },
+    // { value: 10000, suffix: "+", label: "Meals Served Daily" },
+    // { value: 50, suffix: "+", label: "Industrial Clients" },
+    // { value: 99.8, suffix: "%", label: "On-Time Delivery", isFloat: true },
+    // { value: 24, suffix: "×7", label: "Shift Catering Support" },
+    // { value: 15, suffix: "+", label: "Years of Experience" },
+    // { value: 100, suffix: "%", label: "FSSAI Compliant" },
   ];
 
   return (

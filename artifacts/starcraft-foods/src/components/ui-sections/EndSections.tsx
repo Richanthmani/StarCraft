@@ -68,11 +68,11 @@ export function Testimonials() {
 
 export function FAQ() {
   const faqs = [
-    { q: "Can you serve more than 2,000 employees per shift?", a: "Yes, our central kitchen has capacity to comfortably scale up to 20,000 meals per service without compromising on quality or timeliness." },
+    { q: "Can you serve more than 2,000 employees per shift?", a: "Yes, our central kitchen has capacity to comfortably scale up to 5,000 meals per service without compromising on quality or timeliness." },
     { q: "Can menus be customized to our workforce?", a: "Absolutely. We work with your HR and welfare committees to design a rotating 28-day menu that considers regional preferences, nutritional needs, and budget." },
     { q: "Do you support multiple shifts and night operations?", a: "Yes. We run 24×7 operations and are fully equipped to serve night shifts with fresh, hot meals at 11pm, 2am, or any custom schedule." },
     { q: "Do you provide emergency meal services?", a: "We offer 24-hour rapid deployment for unexpected shutdowns, audits, and surge demands to ensure your team remains fed and productive." },
-    { q: "How do you ensure hygiene and food safety?", a: "Every batch follows strict FSSAI, HACCP, and ISO 22000 aligned processes. We conduct batch-wise quality inspections and third-party audits quarterly." },
+    { q: "How do you ensure hygiene and food safety?", a: "Every batch follows strict FSSAI, HACCP, and ISO 22000 aligned processes. We conduct batch-wise quality inspections." },
     { q: "Can we request a trial meal or tasting session?", a: "Yes. We arrange a comprehensive live tasting session for your leadership and HR teams to evaluate food quality before contract finalization." }
   ];
 
@@ -121,7 +121,7 @@ export function CTA() {
           <p className="text-accent font-semibold tracking-wider text-sm mb-4">LET'S TALK</p>
           <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">Looking for a reliable industrial catering partner?</h2>
           <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-            Let's discuss how StarCraft can serve fresh, hygienic, and cost-effective meals for your workforce — starting next month.
+            Let's discuss how StarCraft can serve fresh, hygienic, and cost-effective meals for your workforce.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a href="#contact" className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-4 rounded-md font-bold text-lg transition-colors flex items-center justify-center gap-2">
@@ -149,6 +149,12 @@ export function Contact() {
 
   const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [field]: e.target.value }));
+
+  const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER ?? '916366682345').replace(/\D/g, '');
+  const whatsappMessage = import.meta.env.VITE_WHATSAPP_MESSAGE ?? 'Hi, I would like to chat with your team.';
+  const whatsappHref = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`
+    : undefined;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -214,8 +220,9 @@ export function Contact() {
                     <option value="">Select Industry</option>
                     <option>Manufacturing</option>
                     <option>Logistics &amp; Warehousing</option>
-                    <option>Pharmaceutical</option>
+                    {/*<option>Pharmaceutical</option>*/}
                     <option>Corporate</option>
+                    <option>Construction Sites</option>
                     <option>Other</option>
                   </select>
                 </div>
@@ -281,8 +288,22 @@ export function Contact() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-muted-foreground mb-1">Call Us</p>
-                <p className="text-lg font-bold text-foreground">+91 88888 12345</p>
-                <p className="text-sm text-primary font-medium mt-1 cursor-pointer hover:underline">WhatsApp: Chat with our team</p>
+                <p className="text-lg font-bold text-foreground">+91 636668 2345</p>
+                {whatsappHref ? (
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-primary font-medium mt-1 inline-flex items-center gap-1 hover:underline"
+                  >
+                    WhatsApp: Chat with our team
+                    <MessageCircle className="w-4 h-4" />
+                  </a>
+                ) : (
+                  <p className="text-sm text-primary font-medium mt-1">
+                    WhatsApp: Chat with our team
+                  </p>
+                )}
               </div>
             </div>
 
@@ -292,7 +313,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-muted-foreground mb-1">Email</p>
-                <p className="text-lg font-bold text-foreground">hello@starcraftfoods.in</p>
+                <p className="text-lg font-bold text-foreground">1985satishtalla@gmail.com</p>
               </div>
             </div>
 
@@ -303,8 +324,10 @@ export function Contact() {
               <div>
                 <p className="text-sm font-semibold text-muted-foreground mb-1">Head Office</p>
                 <p className="text-base text-foreground font-medium leading-relaxed">
-                  Plot 42, MIDC Industrial Area, <br />
-                  Pune 411018, Maharashtra, India
+                  Site number 49, Pariwar pride <br/>
+                  205, Anugraha layout<br/>
+                  Kodichikkanahalli, Bangalore <br/>
+                  560076
                 </p>
               </div>
             </div>
@@ -368,7 +391,7 @@ export function Footer() {
               <li><a href="#" className="hover:text-accent transition-colors">Cafeteria Management</a></li>
               <li><a href="#" className="hover:text-accent transition-colors">Night Shift Catering</a></li>
               <li><a href="#" className="hover:text-accent transition-colors">Executive Dining</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Emergency Catering</a></li>
+              {/*<li><a href="#" className="hover:text-accent transition-colors">Emergency Catering</a></li>*/}
             </ul>
           </div>
 
@@ -377,7 +400,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3 text-gray-400">
               <li><a href="#" className="hover:text-accent transition-colors">Manufacturing</a></li>
               <li><a href="#" className="hover:text-accent transition-colors">Warehousing & Logistics</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Pharma & Healthcare</a></li>
+              {/*<li><a href="#" className="hover:text-accent transition-colors">Pharma & Healthcare</a></li>*/}
               <li><a href="#" className="hover:text-accent transition-colors">Corporate Offices</a></li>
               <li><a href="#" className="hover:text-accent transition-colors">Educational Institutions</a></li>
             </ul>
@@ -386,10 +409,10 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Resources</h4>
             <ul className="flex flex-col gap-3 text-gray-400">
-              <li><a href="#" className="hover:text-accent transition-colors">Weekly Menu</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Hygiene & Compliance</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Case Studies</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">FAQ</a></li>
+              <li><a href="#WeeklyMenu" className="hover:text-accent transition-colors">Weekly Menu</a></li>
+              <li><a href="#hygiene" className="hover:text-accent transition-colors">Hygiene & Compliance</a></li>
+              {/*<li><a href="#" className="hover:text-accent transition-colors">Case Studies</a></li>*/}
+              <li><a href="#fac" className="hover:text-accent transition-colors">FAQ</a></li>
               <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
             </ul>
           </div>

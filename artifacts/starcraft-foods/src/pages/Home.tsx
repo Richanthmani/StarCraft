@@ -9,8 +9,8 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <TrustedBy />
-        <Stats />
+        {/*<TrustedBy />*/}
+        {/*<Stats />*/}
         <Services />
         <Industries />
         <Features />
@@ -18,8 +18,8 @@ export default function Home() {
         <WeeklyMenu />
         <Gallery />
         <Hygiene />
-        <CaseStudies />
-        <Testimonials />
+        {/*<CaseStudies />*/}
+        {/*<Testimonials />*/}
         <FAQ />
         <CTA />
         <Contact />

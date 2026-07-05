@@ -17,12 +17,12 @@ import case3 from '@assets/generated_images/case3.jpg';
 
 export function WeeklyMenu() {
   const breakfast = [
-    { day: "MONDAY", item: "Idli, Sambar, Coconut Chutney, Boiled Egg, Milk / Tea" },
-    { day: "TUESDAY", item: "Aloo Paratha, Curd, Pickle, Banana, Masala Chai" },
-    { day: "WEDNESDAY", item: "Poha, Sev, Sprouts Salad, Milk / Coffee" },
-    { day: "THURSDAY", item: "Upma, Coconut Chutney, Fruit Bowl, Tea" },
-    { day: "FRIDAY", item: "Puri Bhaji, Boondi, Seasonal Fruit, Milk" },
-    { day: "SATURDAY", item: "Vegetable Sandwich, Cornflakes, Milk / Tea" }
+    { day: "MONDAY", item: "Idli, Sambar, Chutney, Boiled Egg, Tea / Coffee" },
+    { day: "TUESDAY", item: " Vada, Chutney, Banana, Masala Chai" },
+    { day: "WEDNESDAY", item: "Poha, Sev, Sprouts Salad, Tea / Coffee" },
+    { day: "THURSDAY", item: "Upma, Chutney, Fruit Bowl, Tea" },
+    { day: "FRIDAY", item: "Puri Bhaji, Boondi, Seasonal Fruit, Coffee" },
+    { day: "SATURDAY", item: "Tomato Bhath, Tea / Coffee" },
   ];
 
   return (
@@ -37,16 +37,16 @@ export function WeeklyMenu() {
           >
             <p className="text-primary font-semibold tracking-wider text-sm mb-3">WEEKLY MENU</p>
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">A rotating menu, thoughtfully designed.</h2>
-            <p className="text-lg text-muted-foreground">Regional variety, seasonal freshness, and nutritional balance — refreshed every 28 days.</p>
+            <p className="text-lg text-muted-foreground">Regional variety, seasonal freshness, and balanced nutrition—refreshed regularly to keep every meal enjoyable.</p>
           </motion.div>
-          <motion.button 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md font-medium transition-colors"
-          >
-            <Download className="w-4 h-4" /> Download Menu PDF
-          </motion.button>
+          {/*<motion.button */}
+          {/*  initial={{ opacity: 0, x: 20 }}*/}
+          {/*  whileInView={{ opacity: 1, x: 0 }}*/}
+          {/*  viewport={{ once: true }}*/}
+          {/*  className="flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md font-medium transition-colors"*/}
+          {/*>*/}
+          {/*  <Download className="w-4 h-4" /> Download Menu PDF*/}
+          {/*</motion.button>*/}
         </div>
 
         <Tabs.Root defaultValue="breakfast" className="w-full">
@@ -163,7 +163,7 @@ export function Hygiene() {
         >
           <p className="text-accent font-semibold tracking-wider text-sm mb-3">HYGIENE & FOOD SAFETY</p>
           <h2 className="text-4xl font-serif font-bold mb-4">Uncompromising standards. Every batch. Every day.</h2>
-          <p className="text-primary-foreground/80 text-lg leading-relaxed">Food safety is not an add-on — it is the foundation of every meal we serve. Our processes are audited by third parties every quarter and aligned to FSSAI, HACCP, and ISO 22000.</p>
+          <p className="text-primary-foreground/80 text-lg leading-relaxed">Food safety is not an add-on — it is the foundation of every meal we serve.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
