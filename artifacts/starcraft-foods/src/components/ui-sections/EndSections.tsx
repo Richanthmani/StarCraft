@@ -419,7 +419,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-          <p>© 2026 StarCraft Foods & Services. All rights reserved. · FSSAI Licensed · ISO 22000 Aligned</p>
+          <p>© 2026 StarCraft Foods & Services. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
