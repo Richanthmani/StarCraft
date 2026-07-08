@@ -133,7 +133,13 @@ router.post("/enquiry", enquiryLimiter, async (req, res) => {
 
   const smtpConfig = getSmtpConfig();
   if (!smtpConfig) {
-    res.status(503).json({ error: "Email service is not configured." });
+    const missing = [
+      !process.env["SMTP_HOST"] && "SMTP_HOST",
+      !process.env["SMTP_PORT"] && "SMTP_PORT",
+      !process.env["SMTP_USER"] && "SMTP_USER",
+      !process.env["SMTP_PASSWORD"] && "SMTP_PASSWORD",
+    ].filter(Boolean);
+    res.status(503).json({ error: `Email service is not configured. Missing: ${missing.join(", ")}.` });
     return;
   }
 
@@ -164,7 +170,8 @@ router.post("/enquiry", enquiryLimiter, async (req, res) => {
       });
       return;
     }
-    res.status(500).json({ error: "Failed to send email. Please try again later." });
+    const message = smtpError && "message" in smtpError ? (smtpError as { message?: string }).message : undefined;
+    res.status(500).json({ error: `Failed to send email${message ? `: ${message}` : ""}. Please try again later.` });
   }
 });
 

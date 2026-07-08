@@ -82,73 +82,99 @@ function buildHtml(body) {
 }
 
 export default async function handler(request) {
-  if (request.method !== "POST") {
-    return Response.json({ error: "Method not allowed" }, { status: 405 });
-  }
-
-  const body = await request.json();
-  const validationError = validateFields(body);
-
-  if (validationError) {
-    return Response.json({ error: validationError }, { status: 400 });
-  }
-
-  const fields = {
-    companyName: (body.companyName || "").trim(),
-    industry: (body.industry || "").trim(),
-    location: (body.location || "").trim(),
-    employees: (body.employees || "").trim(),
-    startDate: typeof body.startDate === "string" ? body.startDate.trim() : "",
-    phone: (body.phone || "").trim(),
-    email: (body.email || "").trim(),
-    mealReq: (body.mealReq || "").trim(),
-    specialReq: typeof body.specialReq === "string" ? body.specialReq.trim() : "",
-  };
-
-  const host = process.env.SMTP_HOST;
-  const port = Number(process.env.SMTP_PORT || "");
-  const secure = process.env.SMTP_SECURE === "true";
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASSWORD;
-  const from = process.env.MAIL_FROM || user;
-  const to = process.env.ENQUIRY_TO_EMAIL || user;
-
-  if (!host || !port || Number.isNaN(port) || !user || !pass || !from) {
-    return Response.json({ error: "Email service is not configured." }, { status: 503 });
-  }
-
+  // Wrap the entire handler so nothing can escape as an unhandled exception
+  // (which Vercel renders as an opaque, non-JSON 500 page).
   try {
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-    });
+    if (request.method !== "POST") {
+      return Response.json({ error: "Method not allowed" }, { status: 405 });
+    }
 
-    await transporter.sendMail({
-      from,
-      to,
-      replyTo: fields.email,
-      subject: `New Enquiry from ${fields.companyName} (${fields.industry})`,
-      html: buildHtml(fields),
-    });
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return Response.json({ error: "Invalid JSON in request body." }, { status: 400 });
+    }
 
-    return Response.json({ ok: true });
-  } catch (error) {
-    console.error("Failed to send enquiry email:", error);
-    const smtpError = error;
-    if (smtpError.code === "EAUTH") {
+    const validationError = validateFields(body);
+    if (validationError) {
+      return Response.json({ error: validationError }, { status: 400 });
+    }
+
+    const fields = {
+      companyName: (body.companyName || "").trim(),
+      industry: (body.industry || "").trim(),
+      location: (body.location || "").trim(),
+      employees: (body.employees || "").trim(),
+      startDate: typeof body.startDate === "string" ? body.startDate.trim() : "",
+      phone: (body.phone || "").trim(),
+      email: (body.email || "").trim(),
+      mealReq: (body.mealReq || "").trim(),
+      specialReq: typeof body.specialReq === "string" ? body.specialReq.trim() : "",
+    };
+
+    const host = process.env.SMTP_HOST;
+    const port = Number(process.env.SMTP_PORT || "");
+    const secure = process.env.SMTP_SECURE === "true";
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASSWORD;
+    const from = process.env.MAIL_FROM || user;
+    const to = process.env.ENQUIRY_TO_EMAIL || user;
+
+    if (!host || !port || Number.isNaN(port) || !user || !pass || !from) {
+      const missing = [
+        !host && "SMTP_HOST",
+        (!port || Number.isNaN(port)) && "SMTP_PORT",
+        !user && "SMTP_USER",
+        !pass && "SMTP_PASSWORD",
+      ].filter(Boolean);
       return Response.json(
-        {
-          error:
-            "SMTP authentication failed. Check SMTP_USER, SMTP_PASSWORD, and the hosting mail server settings.",
-        },
-        { status: 401 },
+        { error: `Email service is not configured. Missing: ${missing.join(", ")}.` },
+        { status: 503 },
       );
     }
 
+    try {
+      const transporter = nodemailer.createTransport({
+        host,
+        port,
+        secure,
+        auth: { user, pass },
+      });
+
+      await transporter.sendMail({
+        from,
+        to,
+        replyTo: fields.email,
+        subject: `New Enquiry from ${fields.companyName} (${fields.industry})`,
+        html: buildHtml(fields),
+      });
+
+      return Response.json({ ok: true });
+    } catch (error) {
+      console.error("Failed to send enquiry email:", error);
+      const smtpError = error;
+      if (smtpError && smtpError.code === "EAUTH") {
+        return Response.json(
+          {
+            error:
+              "SMTP authentication failed. Check SMTP_USER, SMTP_PASSWORD, and the hosting mail server settings.",
+          },
+          { status: 401 },
+        );
+      }
+
+      return Response.json(
+        {
+          error: `Failed to send email: ${smtpError && smtpError.message ? smtpError.message : "unknown error"}. Please try again later.`,
+        },
+        { status: 500 },
+      );
+    }
+  } catch (fatal) {
+    console.error("Unhandled error in /api/enquiry:", fatal);
     return Response.json(
-      { error: "Failed to send email. Please try again later." },
+      { error: `Unexpected server error: ${fatal && fatal.message ? fatal.message : "unknown"}` },
       { status: 500 },
     );
   }
