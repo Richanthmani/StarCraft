@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-function esc(str: string): string {
+function esc(str) {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -9,8 +9,8 @@ function esc(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function validateFields(body: Record<string, unknown>): string | null {
-  const required: Array<[string, number]> = [
+function validateFields(body) {
+  const required = [
     ["companyName", 200],
     ["industry", 100],
     ["location", 200],
@@ -30,7 +30,7 @@ function validateFields(body: Record<string, unknown>): string | null {
     }
   }
 
-  const emailVal = body["email"] as string;
+  const emailVal = body["email"];
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
     return "Invalid email address.";
   }
@@ -43,8 +43,8 @@ function validateFields(body: Record<string, unknown>): string | null {
   return null;
 }
 
-function buildHtml(body: Record<string, string>): string {
-  const rows: Array<[string, string]> = [
+function buildHtml(body) {
+  const rows = [
     ["Company Name", body.companyName],
     ["Industry", body.industry],
     ["Location", body.location],
@@ -81,12 +81,12 @@ function buildHtml(body: Record<string, string>): string {
     </div>`;
 }
 
-export default async function handler(request: Request) {
+export default async function handler(request) {
   if (request.method !== "POST") {
     return Response.json({ error: "Method not allowed" }, { status: 405 });
   }
 
-  const body = (await request.json()) as Record<string, unknown>;
+  const body = await request.json();
   const validationError = validateFields(body);
 
   if (validationError) {
@@ -94,24 +94,24 @@ export default async function handler(request: Request) {
   }
 
   const fields = {
-    companyName: (body.companyName as string).trim(),
-    industry: (body.industry as string).trim(),
-    location: (body.location as string).trim(),
-    employees: (body.employees as string).trim(),
+    companyName: (body.companyName || "").trim(),
+    industry: (body.industry || "").trim(),
+    location: (body.location || "").trim(),
+    employees: (body.employees || "").trim(),
     startDate: typeof body.startDate === "string" ? body.startDate.trim() : "",
-    phone: (body.phone as string).trim(),
-    email: (body.email as string).trim(),
-    mealReq: (body.mealReq as string).trim(),
+    phone: (body.phone || "").trim(),
+    email: (body.email || "").trim(),
+    mealReq: (body.mealReq || "").trim(),
     specialReq: typeof body.specialReq === "string" ? body.specialReq.trim() : "",
   };
 
-  const host = process.env["SMTP_HOST"];
-  const port = Number(process.env["SMTP_PORT"] ?? "");
-  const secure = process.env["SMTP_SECURE"] === "true";
-  const user = process.env["SMTP_USER"];
-  const pass = process.env["SMTP_PASSWORD"];
-  const from = process.env["MAIL_FROM"] || user;
-  const to = process.env["ENQUIRY_TO_EMAIL"] || user;
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT || "");
+  const secure = process.env.SMTP_SECURE === "true";
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASSWORD;
+  const from = process.env.MAIL_FROM || user;
+  const to = process.env.ENQUIRY_TO_EMAIL || user;
 
   if (!host || !port || Number.isNaN(port) || !user || !pass || !from) {
     return Response.json({ error: "Email service is not configured." }, { status: 503 });
@@ -136,7 +136,7 @@ export default async function handler(request: Request) {
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Failed to send enquiry email:", error);
-    const smtpError = error as { code?: string };
+    const smtpError = error;
     if (smtpError.code === "EAUTH") {
       return Response.json(
         {
