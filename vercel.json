@@ -1,4 +1,0 @@
-{
-  "buildCommand": "pnpm --filter @workspace/starcraft-foods run build",
-  "outputDirectory": "public"
-}
