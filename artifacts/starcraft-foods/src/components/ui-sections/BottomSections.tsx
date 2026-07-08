@@ -98,7 +98,7 @@ export function Gallery() {
     { src: gal2, label: "Steam Cooking & Bulk Prep", colSpan: "col-span-1" },
     { src: gal3, label: "Chef-Led Culinary Team", colSpan: "col-span-1" },
     { src: gal4, label: "Quality Inspection", colSpan: "col-span-1" },
-    { src: gal5, label: "Delivery Fleet", colSpan: "col-span-1 md:col-span-2" },
+    // { src: gal5, label: "Delivery Fleet", colSpan: "col-span-1 md:col-span-2" },
     { src: gal6, label: "Cafeteria Setup", colSpan: "col-span-1" }
   ];
 

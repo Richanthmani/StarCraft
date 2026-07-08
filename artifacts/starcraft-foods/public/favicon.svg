@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="StarCraft logo">
+  <rect width="64" height="64" rx="12" fill="hsl(141 50% 23%)" />
+  <path
+    fill="#fff"
+    d="m32 14.5 4.9 9.9 10.9 1.6-7.9 7.7 1.9 10.8L32 39.4l-9.8 5.1 1.9-10.8-7.9-7.7 10.9-1.6z"
+  />
+</svg>
