@@ -49,7 +49,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: 'public',
+    outDir: 'dist',
     emptyOutDir: true,
   },
   publicDir: false,
